@@ -1,0 +1,118 @@
+       JDBC CRUD Operations.....
+
+
+// NOTE: THERE MAY BE SPELLING MISTAKES IN THIS CODE.... BECASUSE THIS CODE IS WRITTEN ON NOTEPAD.
+
+database : demodb.
+table name: Student.
+Column: id , name, email,age.
+oparation: add, update, delete, getbyid, getAll.
+url: jdbc:mysql://localhost:3306/demodb.
+user: root.
+password: bhushan.
+
+ //-------------insert oparations--------
+
+     Class.forName("com.mysql.cj.jdbc.Driver");
+   
+     Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb","root","bhushan");
+     
+   String query="inset into Student values (?,?,?,?)";
+  
+   PreparedStatement ps=c.preparedStatement(query);
+  ps.setInt(1,101);
+  ps.setString(2,"bhushan");
+  ps.setString(3,"bhushan@gmail.com");
+  ps.setInt(4,24);
+
+  int n=ps.executeUpdate();
+  
+   if(n>0){
+  System.out.println("Data Inserted Successfully....");
+  } else{
+  System.out.println("due to some error");
+  }
+
+
+----------------update -------------
+
+  Class.forName("com.mysql.cj.jdbc.Driver");
+  
+  Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb","root","bhushan");
+  String query="update Student set name=? where id=?";
+  
+   PreparedStatement ps=c.prepareStatement(query);
+  ps.setString(1,"BHUSHAN";
+  ps.setInt(2,101);
+
+  int n=ps.executeUpdate();
+
+  if(n>0){
+  System.out.println("Data Updated Successfully....");
+  } else{
+ System.out.println("due to some error.....");
+  }
+
+--------------- delete--------------
+
+  Class.forName("com.mysql.cj.jdbc.Driver");
+  
+  Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb","root","bhushan");
+  String query="delete from student where id=?";
+  PreparedStatement ps=c.prepareStatement(query);
+  ps.setInt(1,101);
+
+  int n=ps.executeUpdate(); 
+  
+   if(n>0){
+  System.out.println("Data Deleted Successfully.....");
+   } else{
+   System.out.println("due to some error........");
+   }
+
+------------------getById---------------
+
+  Class.forName("com.mysql.cj.jdbc.Driver");
+  Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb","root","bhushan");
+  
+  String query="select * from Student where id =?";
+  PreparedStatement ps=c.prepareStatement(query);
+  ps.setInt(1,101);
+
+   ResultSet rs=ps.executeQuery();
+
+  while(rs.next()){
+  
+  System.out.println("Id:"+rs.getInt("id"));
+  System.out.println("Name is: "+rs.getString("name"));
+  System.out.println("Email: "+rs.getString("email"));
+  System.out.println("Age:"+rs.getInt("age"));
+
+   }  
+
+  ------------------ get All ------------------
+
+  Class.forName("com.mysql.cj.jdbc.Driver");
+ Connection c=DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb","root","bhushan");
+ 
+ String query="select * from Student";
+ PreparedStatement ps=c.prepareStatement(query);
+   
+  ResultSet rs=ps.executeQuery();
+
+   while(rs.next()){
+
+   System.out.println("Id:"+rs.getInt("id"));
+   System.out.println("Name is: "+rs.getString("name"));
+   System.out.println("Email: "+rs.getString("email"));
+   System.out.println("Age:"+rs.getInt("age"));
+
+  System.out.println("------------------------------------");
+  System.out.println();
+
+   }
+
+
+
+
+
