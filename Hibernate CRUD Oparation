@@ -1,0 +1,152 @@
+
+
+Hibernate CRUD OPARATIONS......
+
+
+
+XML filename : Hibernate.confi.xml;
+Entity class name: Student;
+column name : id auto increment primary key, name , email, age;
+oparations : insert , update , delete, getById, getAll;
+
+
+........................INSERT OPARATION...........
+
+
+         Configuration confi = new Configuration();
+         confi.configure("Hibernate.confi.xml");
+         confi.addAnnotatedClass(Student.class);
+
+            SessionFactory sf=confi.buildSessionFactory();
+            Session session=sf.openSession();
+              
+           Transacation tx=session.beginTransaction();
+          
+            Student std= new ("bhushan","bhushan@gmail.com",23);
+
+
+                try{
+                    
+                  session.persist(std);
+                 tx.commit();
+                System.out.println("Data inseted Successfully");
+
+               }catch(Exception e){
+                   System.out.println(e);
+                    tx.rollback();
+                    System.out.println("due to some error");
+
+                   }
+
+
+--------------------UPDATE OPARATION--------------------------
+                
+
+            Configuration confi =  new Configuration();
+             confi.configur("Hibernate.confi.xml");
+             confi.addAnnotatedClass(Student.class);
+    
+          SessionFactory sf=confi.buildSessionFactory();
+            Session session=sf.openSession();
+            Transaction tx=session.beginTransaction();
+
+             try{
+
+
+                 Student bhu=session.get(Student.class,101);
+                        
+              bhu.setName="ajay";
+              bhu.setEmail="ajay@gmail.com";
+              bhu.setAge=24;
+             
+              session.persist(bhu);
+              tx.commit();
+             System.out.println("Data updated successfully....");
+
+                }catch(Exception e){
+                  System.out.println(e);
+                    tx.rollback();
+                  System.out.println("due to some error");
+
+                            }
+
+------------------- DELETE OPARATION----------------------------
+
+
+
+     Configuration confi = new Configuration();
+    confi.configure("Hibernate.confi.xml");
+   confi.addAnnotatedClass(Student.class);
+
+   SessionFactory sf=confi.buildSessionFactory();
+   Session session=sf.openSession();
+   Transaction tx=session.beginTransaction();
+   
+     try{
+
+       Student bhu=session.get(Student.class,101);
+       
+          session.delete(bhu);
+        tx.commit();
+         System.out.println("Data Deleted Successfully");
+           
+           }catch(Excepation e){
+
+             System.out.println(e);
+            tx.rollback();
+           System.out.println("due to some error...");
+
+                  }
+
+---------------- GET BY ID-----------------
+
+
+          Configuration confi= new Configuration();
+         confi.configure("Hibernate.confi.xml");
+         confi.addAnnotatedClass(Student.class);
+
+        SessionFactory sf=confi.buildSessionFactory();
+         Session session=sf.openSession();
+           
+          // No need to Transaction . it is used only insert, update and delete.
+        
+        try{
+
+            Student bhu=session.get(Student.class,101);
+       
+            // we need to override to ToString method.
+         System.out.println(bhu);
+               
+            }catch(Excepation e){
+              System.out.println(e);
+             System.out.println("due to some error");  
+              }
+        
+-------------------GET ALL-------------------------
+
+
+     Configuration confi= new Configuration();
+    confi.configure("Hibernate.confi.xml");
+     confi.addAnnotatedClass(Student.class);
+
+       SessionFactory sf=confi.buildSessionFactory();
+       Session session=sf.openSession();
+     
+         // No need to Transaction in get oparation....
+
+
+          try{
+            
+             Criteria cr= session.CreateCriteria(Student.class);
+         
+              List<Student> list= cr.list();
+                
+                   for(Student std: list){
+                    System.out.println(std);
+                       }
+                    }catch(Exception e){
+                   System.out.println(e);
+                   System.out.println("due to some error");
+
+
+
