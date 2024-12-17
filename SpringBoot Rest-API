@@ -1,0 +1,278 @@
+SpringBoot (Rest-API)  CRUD Oparations..
+
+
+NOTE:- THERE MAY BE SPELLING MISTAKES IN THIS CODE.. BECAUSE THIS CODE IS WRITTEN ON NOTEPAD..
+
+Entity class: Student.
+column : id , name , email, age.
+NO NEED TO ADD ID: id auto increment.
+
+Total REST-API: addStd, updateStd, deleteStd, getbyidStd, getaddStd.
+Flow of Program : Postman -> Controller -> Sercice -> Dao -> Database.
+
+________________________________________________
+_________________________________________________
+@Repository
+public class MainDao{
+
+     @Autowired
+private SessionFactory sf;
+
+-------------add student--------------
+public String addstd(Student std){
+
+   String msg=null;
+  Session session=sf.openSession();
+   Transaction tx=session.beginTransaction();
+
+  try{
+
+  session.persist(std);
+  tx.commit();
+ msg="Data Inseted Successfully....";
+
+  } catch(Exception e){
+
+  e.getMessage();
+  tx.rollback();
+  msg="due to some error";
+ }
+  return msg;
+}
+
+--------------- update  student---------------
+
+
+ public String updatestd(int id , Student std){
+
+  String msg=null;
+  Session session=sf.openSession();
+  Transaction tx=session.beginTransaction();
+  
+  try{
+
+   Student st=session.get(Student.class, id);
+
+
+    st.setName("Bhushan");
+    st.setEmail("bhushan@gami.com");
+    st.setAge(24);
+
+   session.persist(st);
+   tx.commit();
+  msg="Data Updated Successfully.....";
+
+  } catch(Exception e){
+  
+ e.getMessage();
+ tx.rollback();
+
+  msg="Due to some error";
+ }
+return msg;
+}
+
+----------------delete student-----------------
+
+public String deletestd(int id){
+ 
+  String msg=null;
+  Session session=sf.openSession();
+  Transaction tx=session.beginTransaction();
+
+  try{
+
+  Student std=session.get(Student.class, id);  
+
+    session.remove(std);
+   tx.commit();
+  msg="Data Deleted Successfully....";
+
+  } catch(Exception e){
+
+  e.getMessage();
+  tx.rollback();
+
+  msg="due to some error";
+  }
+return msg;
+}
+ 
+
+--------------------get by id student------------
+
+
+  public Student getbyidstd(int id){
+
+  Session session=sf.openSession();
+  
+   Student std=session.get(Student.class, id);
+
+  return std;
+
+}
+-----------------get all student-----------------
+
+
+public List<Student> getallstd(){
+
+  Session session=sf.openSession();
+  String hqlQuery="FROM Student";
+
+   Query<Student> query= session.createQuery(hqlQuery, Student.class);
+    
+    List<Student> list= query.list();
+
+     return list;
+
+}
+
+
+}// dao class is ended.....
+-------------------------------------------------------------------------------
+
+ 
+@Service
+public class MainService{
+
+
+  @Autowired   
+  private MainDao dao;
+
+ 
+----------------add student------------------
+ public String addstd(Student std){
+
+    String msg=dao.addstd(std);
+
+   if(Objects.isNull(msg)){
+  msg="due to some error";
+   }
+ return msg;
+}
+
+----------------- update   student-----------
+
+public String updatestd(int id ,Student std){
+
+   String msg=dao.updatestd(id,std);
+
+  if(Objects.isNull(msg)){
+  msg="due to som error";
+   }
+ return msg;
+
+}
+
+---------------------delete student---------
+
+  public String deletestd(int id){
+
+   String msg=dao.deletestd(id);
+
+   if(Objects.isNull(msg)){
+  msg="due to some error";
+  }
+ return msg;
+}
+
+----------------- getbyid student-------------
+
+ public Student getbyidstd(int id){
+
+   return dao.getbyidstd(id);
+  
+}
+
+-------------get All student-------------
+
+  public List<Student> agtallstd(){
+
+   return dao.getallstd();
+}
+
+
+
+}// Service class is ended.
+-----------------------------------------------------------
+
+
+@RestController
+@RequestMapping("api")
+ public class MainController {
+
+
+  @Autowired
+ private MainServece servi;
+
+
+------------- add student---------------
+  @PostMapping("addstd")
+ public ResponseEntity<String> addstd( @ReqestBody Student std){
+
+    String msg=servi.addstd(std);
+
+  return ResponseEntity.ok(msg);
+
+}
+
+---------- update student--------------
+
+  @PutMapping("upstd/{id}")
+  public ResponseEntity<String> updatestd(@PathVariable int id, @RequestBody Student std){
+
+    String msg=servi.updatestd(id,std);
+
+   return ResponseEntity.ok(msg);
+
+}
+
+
+-------------delete student-------------
+
+@DeleteMapping("deletestd/{id}")
+ public ResponseEntity<String> ( @PathVariable int id){
+
+   String msg=servi.deletestd(id);
+   
+  return ResponseEntity.ok(msg);
+
+}
+
+---------------------- getby id student-----------
+
+  @GetMapping("getbyid/{id}")
+ public ResponseEntity<Student> getbyidstd( @PathVariable int id){
+
+   Student std=servi.getbyidstd(id);
+
+   return ResponseEntity.ok(std);
+
+   }
+
+-------------- get All Student--------------
+
+  @GetMapping("getallstd")
+  public ResponseEntity<Student> getallstd(){
+  
+   List<Student> list=servi.getallstd();
+  
+   return ResponseEntity.ok(list);
+    }
+
+
+}// controller ended.
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
