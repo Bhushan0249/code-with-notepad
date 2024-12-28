@@ -1,0 +1,155 @@
+ --------JDBC crud operations Using Statement Interface ---------
+
+Database Name: demodb;
+Table Name: Student;
+Column Name: id, name, email,age;
+url: "jdbc:mysql://localhost:3306/YOUR_DATABASE_NAME"
+user:"root"
+password: "bhushan"// my database password
+
+
+
+insert -> Statement;
+update -> Statement;
+delete -> Statement;
+getById-> Statement;
+getAll -> Statement;
+
+//==============================================
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Task1 {
+
+	public static void insert() throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb", "root", "bhushan");
+
+		String query = "insert into Student values(101,'bhushan','bhushan@gmail.com',25)";
+
+		Statement s = c.createStatement();
+
+		int n = s.executeUpdate(query);
+
+		if (n > 0) {
+			System.out.println("Data Inseted Successfully...");
+		} else {
+			System.out.println("Due to some error....");
+		}
+	}
+
+//	------------update operation-----------
+	public static void update() throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb", "root", "bhushan");
+
+		String query = "update Student set name='BHUSHAN' where id=101";
+
+		Statement s = c.createStatement();
+
+		int n = s.executeUpdate(query);
+
+		if (n > 0) {
+			System.out.println("Data Updated Successfully....");
+		} else {
+			System.out.println("due to some error...");
+		}
+	}
+//	----------delete operation------------------
+
+	public static void delete() throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb", "root", "bhushan");
+
+		String query = "delete from Student where id=101";
+
+		Statement s = c.createStatement();
+
+		int n = s.executeUpdate(query);
+
+		if (n > 0) {
+			System.out.println("Data Deleted Successfully.....");
+		} else {
+			System.out.println("due to some error....");
+		}
+	}
+
+//	-------------get by id-----------------
+
+	public static void getById() throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb", "root", "bhushan");
+
+		String query = "select * from Student where id=101";
+
+		Statement s = c.createStatement();
+
+		ResultSet rs = s.executeQuery(query);
+
+		while (rs.next()) {
+
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			int age = rs.getInt("age");
+
+			System.out.println("id:" + id + " name:" + name + " email:" + email + " age:" + age);
+		}
+	}
+//	-----------getAll --------------------
+
+	public static void getAll() throws Exception {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/demodb", "root", "bhushan");
+
+		String query = "select * from Student";
+
+		Statement s = c.createStatement();
+
+		ResultSet rs = s.executeQuery(query);
+
+		while (rs.next()) {
+
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			int age = rs.getInt("age");
+
+			System.out.println("id:" + id + " name:" + name + " email:" + email + " age:" + age);
+
+			System.out.println();
+			System.out.println("----------------------------");
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		// method calling.
+		
+		try {
+			insert();
+			update();
+			delete();
+			getById();
+			getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
+}
