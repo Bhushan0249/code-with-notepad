@@ -1,0 +1,94 @@
+
+-----------list of PostgreSQL queries------
+
+Create a database:
+CREATE DATABASE database_name;
+
+Connect to a database:
+\c database_name
+
+List all databases:
+\l
+
+Drop a database:
+DROP DATABASE database_name;
+
+Create a table:
+CREATE TABLE table_name (
+    id int PRIMARY KEY,
+    column2 datatype NOT NULL,
+    column3 datatype DEFAULT value
+);
+
+List all tables in the current database:
+\dt
+
+Describe a table's structure:
+\d table_name
+
+Drop a table:
+DROP TABLE table_name;
+
+Alter a table (add a column):
+ALTER TABLE table_name ADD COLUMN column_name datatype;
+
+Alter a table (modify a column):
+ALTER TABLE table_name ALTER COLUMN column_name TYPE new_datatype;
+
+Rename a table:
+ALTER TABLE old_table_name RENAME TO new_table_name;
+
+Insert data into a table:
+INSERT INTO table_name (column1, column2) VALUES (value1, value2);
+
+Update data in a table:
+UPDATE table_name SET column1 = value1 WHERE condition;
+
+Delete data from a table:
+DELETE FROM table_name WHERE condition;
+
+Retrieve data from a table:
+SELECT column1, column2 FROM table_name WHERE condition;
+
+
+Retrieve all rows:
+SELECT * FROM table_name;
+
+
+Filter rows with conditions:
+SELECT * FROM table_name WHERE column_name = value;
+
+
+
+
+INNER JOIN:
+SELECT employees.name, departments.department_name
+FROM employees
+INNER JOIN departments ON employees.department_id = departments.id;
+
+
+LEFT JOIN:
+SELECT employees.name, departments.department_name
+FROM employees
+LEFT JOIN departments ON employees.department_id = departments.id;
+
+
+RIGHT JOIN:
+SELECT employees.name, departments.department_name
+FROM employees
+RIGHT JOIN departments ON employees.department_id = departments.id;
+
+
+ FULL JOIN:
+SELECT employees.name, departments.department_name
+FROM employees
+FULL JOIN departments ON employees.department_id = departments.id;
+
+SELF JOIN:
+SELECT e1.name AS employee, e2.name AS manager
+FROM employees e1
+INNER JOIN employees e2 ON e1.manager_id = e2.id;
+
+
+
+
