@@ -1,6 +1,6 @@
 
 
-Hibernate CRUD OPARATIONS......
+Hibernate CRUD OPERATIONS......
 
 
 
@@ -10,7 +10,7 @@ column name : id auto increment primary key, name , email, age;
 oparations : insert , update , delete, getById, getAll;
 
 
-........................INSERT OPARATION...........
+........................INSERT OPERATION...........
 
 
          Configuration confi = new Configuration();
@@ -39,7 +39,7 @@ oparations : insert , update , delete, getById, getAll;
                    }
 
 
---------------------UPDATE OPARATION--------------------------
+--------------------UPDATE OPERATION--------------------------
                 
 
             Configuration confi =  new Configuration();
@@ -70,7 +70,7 @@ oparations : insert , update , delete, getById, getAll;
 
                             }
 
-------------------- DELETE OPARATION----------------------------
+------------------- DELETE OPERATION----------------------------
 
 
 
@@ -132,18 +132,24 @@ oparations : insert , update , delete, getById, getAll;
        SessionFactory sf=confi.buildSessionFactory();
        Session session=sf.openSession();
      
-         // No need to Transaction in get oparation....
+         // No need to Transaction in get operation....
 
 
           try{
             
-             Criteria cr= session.CreateCriteria(Student.class);
-         
-              List<Student> list= cr.list();
-                
-                   for(Student std: list){
-                    System.out.println(std);
-                       }
+           //  Criteria cr= session.CreateCriteria(Student.class);
+             // List<Student> list= cr.list();
+               //    for(Student std: list){
+                  //  System.out.println(std);
+                    //   }
+
+                   String hqlQuery="FROM Student";
+                     Query<Student> query=session.createQuery(hqlQuery,Student.class);
+                        List<Student> list=query.list();
+
+                     for(Student student : list){
+                        System.out.println(student);
+                  }
                     }catch(Exception e){
                    System.out.println(e);
                    System.out.println("due to some error");
