@@ -11,7 +11,7 @@ url: jdbc:mysql://localhost:3306/demodb.
 user: root.
 password: bhushan.
 
- //-------------insert oparations--------
+ //-------------insert operations--------
 
      Class.forName("com.mysql.cj.jdbc.Driver");
    
